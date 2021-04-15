@@ -61,6 +61,8 @@ The following table lists the configurable parameters of the sumologic-fluentd c
 |-----------|-------------|---------|
 | `podAnnotations` | Annotations to add to the DaemonSet's Pods | `{}` |
 | `tolerations` | List of node taints to tolerate (requires Kubernetes >= 1.6) | `[]` |
+| `nodeSelector` | Node labels for fluentd pod assignment | `{}` |
+| `affinity` | Expressions for affinity | `{}` |
 | `extraEnv` | List of additional env vars to append to pods | `[]` |
 | `updateStrategy` | `OnDelete` or `RollingUpdate` (requires Kubernetes >= 1.6) | `OnDelete` |
 | `sumologic.collectorUrl` | An HTTP collector in SumoLogic that the container can send logs to via HTTP | `Nil` You must provide your own value |
@@ -72,7 +74,7 @@ The following table lists the configurable parameters of the sumologic-fluentd c
 | `sumologic.sourceName` | Set the sumo `_sourceName` | `%{namespace}.%{pod}.%{container}` |
 | `sumologic.sourceHost` | Set the sumo `_sourceHost` | `Nil` |
 | `sumologic.sourceCategory` | Set the sumo `_sourceCategory` | `%{namespace}/%{pod_name}` |
-| `sumologic.sourceCategoryPrefix` | Define a prefix, for `_sourceCategory` | `Nil` |
+| `sumologic.sourceCategoryPrefix` | Define a prefix, for `_sourceCategory` | `kubernetes/` |
 | `sumologic.sourceCategoryReplaceDash` | Used to replace `-` with another character | `/` |
 | `sumologic.logFormat` | Format to post logs, into sumo (`json`, `json_merge`, or `text`) | `json` |
 | `sumologic.kubernetesMeta` | Include or exclude kubernetes metadata, with `json` format | `true` |

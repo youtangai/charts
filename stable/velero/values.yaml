@@ -6,7 +6,7 @@
 # enabling restic). Required.
 image:
   repository: gcr.io/heptio-images/velero
-  tag: v1.0.0
+  tag: v1.1.0
   pullPolicy: IfNotPresent
 
 # Annotations to add to the Velero deployment's pod template. Optional.
@@ -149,8 +149,17 @@ credentials:
   # of your IAM credentials file.
   secretContents: {}
 
+# Wheter to create volumesnapshotlocation crd, if false => disable snapshot feature
+snapshotsEnabled: true
+
 # Whether to deploy the restic daemonset.
 deployRestic: false
+
+restic:
+  podVolumePath: /var/lib/kubelet/pods
+  privileged: false
+  # Resource requests/limits to specify for the Restic daemonset deployment. Optional.
+  resources: {}
 
 # Backup schedules to create.
 # Eg:
@@ -162,6 +171,17 @@ deployRestic: false
 #       includedNamespaces:
 #        - foo
 schedules: {}
+
+# Velero ConfigMaps.
+# Eg:
+# configMaps:
+#   restic-restore-action-config:
+#     labels:
+#       velero.io/plugin-config: ""
+#       velero.io/restic: RestoreItemAction
+#     data:
+#       image: gcr.io/heptio-images/velero-restic-restore-help
+configMaps: {}
 
 ##
 ## End of additional Velero resource settings.

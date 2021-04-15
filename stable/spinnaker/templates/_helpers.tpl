@@ -18,10 +18,13 @@ We truncate at 24 chars because some Kubernetes name fields are limited to this 
 {{/*
 Common labels for metadata.
 */}}
-{{- define "spinnaker.standard-labels" -}}
+{{- define "spinnaker.standard-labels-base" -}}
 app: {{ include "spinnaker.fullname" . | quote }}
 heritage: {{ .Release.Service | quote }}
 release: {{ .Release.Name | quote }}
+{{- end -}}
+{{- define "spinnaker.standard-labels" -}}
+{{ include "spinnaker.standard-labels-base" . }}
 chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
 {{- end -}}
 
@@ -50,5 +53,16 @@ Redis base URL for Spinnaker
 {{- printf "redis://:%s@%s:%s" .Values.redis.external.password .Values.redis.external.host (.Values.redis.external.port | toString) -}}
 {{- else }}
 {{- printf "redis://%s:%s" .Values.redis.external.host (.Values.redis.external.port | toString) -}}
+{{- end }}
+{{- end }}
+
+{{/*
+Create name of kubeconfig file to use when setting up kubernetes provider
+*/}}
+{{- define "spinnaker.kubeconfig" -}}
+{{- if .Values.kubeconfig.encryptedKubeconfig }}
+{{- printf .Values.kubeconfig.encryptedKubeconfig | toString -}}
+{{- else }}
+{{- printf "/opt/kube/%s" .Values.kubeConfig.secretKey  | toString -}}
 {{- end }}
 {{- end }}

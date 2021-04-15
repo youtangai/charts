@@ -14,6 +14,12 @@ tolerations: []
 #     effect: NoSchedule
 #     operator: "Exists"
 
+## Node labels for fluentd pod assignment
+nodeSelector: {}
+
+## Expressions for affinity
+affinity: {}
+
 # Extra environment variables to set for fluentd
 extraEnv: []
 
@@ -61,8 +67,8 @@ sumologic:
   ## Set the _sourceCategory metadata field in SumoLogic. (Default "%{namespace}/%{pod_name}")
   sourceCategory: ""
 
-  ## Set the prefix, for _sourceCategory metadata. (Default nil)
-  sourceCategoryPrefix: ""
+  ## Set the prefix, for _sourceCategory metadata. (Default kubernetes/)
+  sourceCategoryPrefix: "kubernetes/"
 
   ## Used to replace - with another character. (default /)
   sourceCategoryReplaceDash: ""
